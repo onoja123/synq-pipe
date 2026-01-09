@@ -1,0 +1,40 @@
+name: Content Creation Pipeline
+description: Multi-stage content generation with Ghost validation
+input: "Write a blog post about the benefits of exercise"
+
+steps:
+  - name: Generate Outline
+    provider: openai
+    model: gpt-4
+    temperature: 0.7
+    max_tokens: 500
+
+  - name: Write Introduction
+    provider: anthropic
+    model: claude-sonnet-4
+    temperature: 0.8
+
+  - name: Fact Check (Ghost Mode)
+    mode: ghost
+    providers: [openai, anthropic, google]
+    prompt: "Fact-check the medical and scientific claims in this content. Verify accuracy."
+
+  - name: Write Main Body
+    provider: google
+    model: gemini-1.5-pro
+    temperature: 0.7
+
+  - name: Style Review (Ghost Mode)
+    mode: ghost
+    providers: [openai, anthropic]
+    prompt: "Review the writing style, clarity, and engagement. Suggest improvements."
+
+  - name: Generate Conclusion
+    provider: anthropic
+    model: claude-sonnet-4
+    temperature: 0.8
+
+  - name: SEO Optimization
+    provider: openai
+    model: gpt-4
+    prompt: "Add SEO-friendly meta description and keywords."

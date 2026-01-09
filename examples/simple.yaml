@@ -1,0 +1,12 @@
+name: Simple Translation Pipeline
+description: Translate and summarize text
+input: "The quick brown fox jumps over the lazy dog."
+
+steps:
+  - name: Translate to French
+    provider: openai
+    model: gpt-4
+
+  - name: Translate to Spanish
+    provider: anthropic
+    model: claude-sonnet-4

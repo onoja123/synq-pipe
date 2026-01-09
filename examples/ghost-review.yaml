@@ -1,0 +1,25 @@
+name: Ghost Mode Code Review
+description: Multi-model code review with consensus
+input: |
+  Review this Python function:
+  
+  def calculate_fibonacci(n):
+      if n <= 1:
+          return n
+      return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+
+steps:
+  - name: Initial Code Analysis
+    provider: openai
+    model: gpt-4
+    prompt: "Analyze this code for correctness and efficiency."
+
+  - name: Security & Performance Review (Ghost Mode)
+    mode: ghost
+    providers: [openai, anthropic, google]
+    prompt: "Review this code for security vulnerabilities and performance issues. Be specific."
+
+  - name: Generate Optimized Version
+    provider: anthropic
+    model: claude-sonnet-4
+    prompt: "Based on the review, provide an optimized version of the code."
